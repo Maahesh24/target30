@@ -9,6 +9,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -22,10 +23,24 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform init
+        run: |
+          echo "Starting Terraform Init..."
+          terraform init
+          echo "Terraform Init completed successfully"
 
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          echo "Starting Terraform Plan..."
+          terraform plan
+          echo "Terraform Plan completed successfully"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: |
+          echo "Starting Terraform Apply..."
+          terraform apply -auto-approve
+          echo "Terraform Apply completed successfully"
+
+      - name: Workflow Status
+        if: always()
+        run: |
+          echo "Workflow completed with status: ${{ job.status }}"
