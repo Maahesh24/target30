@@ -12,7 +12,7 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg255" {
+resource "azurerm_resource_group" "nik" {
   name     = "mahesh-demo-rg"
   location = "East US"
 }
